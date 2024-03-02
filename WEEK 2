@@ -1,0 +1,91 @@
+import java.util.Scanner;
+
+class Subject {
+    int subjectMarks;
+    int credits;
+    int grade;
+}
+
+class Student {
+    String name;
+    String usn;
+    double SGPA;
+    Subject[] subject;
+    Scanner s;
+
+ 
+    Student() {
+        int i;
+        subject = new Subject[9];
+        for (i = 0; i < 9; i++)
+            subject[i] = new Subject();
+        s = new Scanner(System.in);
+    }
+
+   
+    void getStudentDetails() {
+        System.out.println("Enter student name");
+        name = s.next();
+        System.out.println("Enter student usn");
+        usn = s.next();
+    }
+
+ 
+    void getMarks() {
+        int i;
+        for (i = 0; i < 9; i++) {
+            System.out.println("Enter marks for subject " + (i + 1));
+            subject[i].subjectMarks = s.nextInt();
+            System.out.println("Enter credits for subject " + (i + 1));
+            subject[i].credits = s.nextInt();
+
+            if (subject[i].subjectMarks >= 90) {
+                subject[i].grade = 10;
+            } else if (subject[i].subjectMarks >= 80 && subject[i].subjectMarks < 90) {
+                subject[i].grade = 9;
+            } else if (subject[i].subjectMarks >= 70 && subject[i].subjectMarks < 80) {
+                subject[i].grade = 8;
+            } else if (subject[i].subjectMarks >= 60 && subject[i].subjectMarks < 70) {
+                subject[i].grade = 7;
+            } else if (subject[i].subjectMarks >= 50 && subject[i].subjectMarks < 60) {
+                subject[i].grade = 6;
+            } else if (subject[i].subjectMarks >= 40 && subject[i].subjectMarks < 50) {
+                subject[i].grade = 5;
+            } else {
+                System.out.println("Failed");
+                System.exit(0);
+            }
+        }
+    }
+
+
+    void computeSGPA() {
+        int totalCredits = 0;
+        int creditsGained = 0;
+        int i;
+
+        for (i = 0; i < 9; i++) {
+            totalCredits += subject[i].credits;
+            creditsGained += subject[i].credits * subject[i].grade;
+        }
+
+        SGPA = (double) creditsGained / totalCredits;
+    }
+
+
+    void displayResult() {
+        System.out.println("Name = " + name);
+        System.out.println("Usn = " + usn);
+        System.out.println("SGPA = " + SGPA);
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+        Student s1 = new Student();
+        s1.getStudentDetails();
+        s1.getMarks();
+        s1.computeSGPA();
+        s1.displayResult();
+    }
+}
